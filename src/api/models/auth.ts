@@ -1,11 +1,17 @@
-export interface ApiAuthPayload {
+export interface ApiRegisterPayload {
   login: string;
   password: string;
 }
-export interface ApiAuthResponse {
+
+export interface ApiLoginPayload {
+  login: string;
+  password: string;
+}
+
+export interface ApiLoginResponse {
   token: string;
-  refresh: string;
-  expired: number // timestamp
+  // refresh: string;
+  // expired: number // timestamp
 }
 
 export interface ApiLogoutPayload {

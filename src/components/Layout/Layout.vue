@@ -3,7 +3,7 @@
 </script>
 
 <template>
-Layout231312
+
 </template>
 
 <style scoped>

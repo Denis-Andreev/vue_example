@@ -1,10 +1,13 @@
-import type { ApiAuthPayload } from '@/api/models'
+import type { ApiLoginPayload, ApiRegisterPayload } from '@/api/models'
+import { instance } from '@/api/requests'
 
 class AuthService {
-  login(data: ApiAuthPayload) {
-    console.log(data)
+  login(data: ApiLoginPayload) {
+    return instance().open().login(data)
   }
-  auth(data: ApiAuthPayload) {
-    console.log(data)
+  register(data: ApiRegisterPayload) {
+    return instance().open().register(data)
   }
 }
+
+export default new AuthService();

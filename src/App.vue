@@ -4,6 +4,7 @@ import Layout from '@/components/Layout/Layout.vue'
 
 <template>
   <Layout />
+  <RouterView />
 </template>
 
 <style scoped>
