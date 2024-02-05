@@ -43,14 +43,14 @@ const router = createRouter({
   ]
 })
 
-const protectedPages = ['profile', 'list']
+const protectedPages = ['Профиль', 'Список чего-то']
 router.beforeEach(async (to) => {
   const toName = to.name
   if (
     !checkToken() && toName &&
     protectedPages.includes(toName as string) && toName != '403'
   ) {
-    return { name: '403' }
+    return '/403'
   }
 })
 
