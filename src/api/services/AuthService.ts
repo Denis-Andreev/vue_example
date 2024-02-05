@@ -1,13 +1,16 @@
 import type { ApiLoginPayload, ApiRegisterPayload } from '@/api/models'
-import { instance } from '@/api/requests'
+import { requests } from '@/api/requests'
+import { envList } from '@/core/env-list'
+import { setToken } from '@/api/helpers/token'
 
-class AuthService {
-  login(data: ApiLoginPayload) {
-    return instance().open().login(data)
+export class AuthService {
+  static async login(payload: ApiLoginPayload) {
+    const res = await requests().open().login(payload)
+    const token = res.data.token
+    setToken(token);
+    return res;
   }
-  register(data: ApiRegisterPayload) {
-    return instance().open().register(data)
+  static register(payload: ApiRegisterPayload) {
+    return requests().open().register(payload)
   }
 }
-
-export default new AuthService();

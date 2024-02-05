@@ -1,10 +1,12 @@
 export interface ApiRegisterPayload {
-  login: string;
+  email: string;
   password: string;
+  name: string;
+  age: number;
 }
 
 export interface ApiLoginPayload {
-  login: string;
+  email: string;
   password: string;
 }
 
@@ -16,4 +18,11 @@ export interface ApiLoginResponse {
 
 export interface ApiLogoutPayload {
   token: string;
+}
+
+export interface TokenInfo {
+  email: string;
+  userId: string;
+  iat: number;
+  exp: number
 }

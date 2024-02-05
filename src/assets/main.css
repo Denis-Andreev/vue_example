@@ -1,1 +1,14 @@
 @import './base.css';
+
+@layer components {
+    .input {
+        @apply bg-blue-50 border-blue-100 border-2 p-2 block;
+    }
+    .input:hover {
+        @apply border-blue-200;
+    }
+}
+
+input {
+    outline: none;
+}

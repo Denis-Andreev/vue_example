@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
-import AuthService from '@/api/services/AuthService'
-import type { ApiLoginPayload } from '@/api/models'
-import { useRoute } from 'vue-router'
+import type { ApiRegisterPayload } from '@/api/models'
+import { AuthService } from '@/api/services/AuthService'
 
 interface RegisterStoreState {
   loading: boolean;
@@ -13,9 +12,12 @@ const initialState: RegisterStoreState = {
   error: false,
 }
 
-export const useRegisterStore = defineStore('counter', () => {
-  const route = useRoute()
-  return {
+interface RegisterPayload {
+  data: ApiRegisterPayload,
+  onSuccess?: () => void;
+}
+
+export const useRegisterStore = defineStore('registerStore',  {
     state: () => initialState,
     actions: {
       setError(error: boolean) {
@@ -24,17 +26,18 @@ export const useRegisterStore = defineStore('counter', () => {
       setLoading(loading: boolean) {
         this.loading = loading;
       },
-      async register(payload: ApiLoginPayload) {
+      async register(payload: RegisterPayload) {
+        this.error = false;
         this.loading = true;
         try {
-          await AuthService.register(payload)
-          void route.push('/login')
-        } catch {
+          await AuthService.register(payload.data)
+          payload?.onSuccess && payload.onSuccess()
+        } catch (e) {
+          console.error(e);
           this.setError(true)
         } finally {
           this.setLoading(false)
         }
       },
     },
-  }
-})
+  })

@@ -1,18 +1,19 @@
 import { envList } from '@/core/env-list'
-import type { ApiLoginPayload } from '@/api/models'
+import type { ApiLoginPayload, ApiLoginResponse, ApiRegisterPayload } from '@/api/models'
 import paths from '@/api/paths'
 import { instanceAxiosClose, instanceAxiosOpen } from '@/api/instance'
+import type { User } from '@/api/models/user'
 
-export const instance = () => {
+export const requests = () => {
   const mainKey = envList.tokenKey
   const token = localStorage.getItem(mainKey)
   return {
     open: () => ({
-      login: (body: ApiLoginPayload) => instanceAxiosOpen().post(paths.login, body),
-      register: (body: ApiLoginPayload) => instanceAxiosOpen().post(paths.register, body),
+      login: (body: ApiLoginPayload) => instanceAxiosOpen().post<ApiLoginResponse>(paths.login, body),
+      register: (body: ApiRegisterPayload) => instanceAxiosOpen().post(paths.register, body),
     }),
     close: () => ({
-      events: () => instanceAxiosClose(token).get(paths.refresh),
+      getUserInfo: (id: string) => instanceAxiosClose(token).get<User>(paths.user(id)),
     })
   }
 }
